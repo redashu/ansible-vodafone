@@ -135,3 +135,53 @@ Number of key(s) added: 1
 Now try logging into the machine, with:   "ssh 'ro
 ```
 
+### creating inventory group in ainsble Host machine 
+
+```
+[root@ip-172-31-93-233 ansible]# cat  /etc/ansible/hosts
+[test]
+192.168.100.2
+192.168.101.2
+```
+
+## Understanding groups in inventory 
+
+<img src="gr.png">
+
+### using ping module to test connection of targets hsots
+
+```
+[ashu@ip-172-31-93-233 ~]$ ansible   192.168.100.2  -m ping  -u root 
+192.168.100.2 | SUCCESS => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/bin/python3"
+    }, 
+    "changed": false, 
+    "ping": "pong"
+}
+[ashu@ip-172-31-93-233 ~]$ ansible   192.168.101.2  -m ping  -u root 
+192.168.101.2 | SUCCESS => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/bin/python3"
+    }, 
+    "changed": false, 
+    "ping": "pong"
+}
+[ashu@ip-172-31-93-233 ~]$ 
+[ashu@ip-172-31-93-233 ~]$ ansible   test  -m ping  -u root 
+192.168.101.2 | SUCCESS => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/bin/python3"
+    }, 
+    "changed": false, 
+    "ping": "pong"
+}
+192.168.100.2 | SUCCESS => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/bin/python3"
+    }, 
+    "changed": false, 
+    "ping": "pong"
+}
+
+```
