@@ -301,3 +301,25 @@ remote_user = root
      state: present
 
 ```
+
+### checking 
+
+```
+---
+- name: choosing target hosts 
+  hosts: user_test
+  tasks:
+  - name: using ping module to send ICMP request to all the test group targets
+    ping: 
+  - name: creating user
+    user:
+     name: jack-ashu
+     password: "{{ '12345' | password_hash('sha512') }}"
+
+  - name: installing vim software
+    yum:
+     name: vim
+     state: present
+
+```
+
