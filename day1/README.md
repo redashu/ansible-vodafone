@@ -256,3 +256,28 @@ ansible-playbook --syntax-check  ashu-playbook1.yaml
 playbook: ashu-playbook1.yaml
 
 ```
+
+
+### COncept of custom ansible.cfg and inventory file for particular users
+
+<img src="custom.png">
+
+### creating custom ansible.cfg and hosts file
+
+```
+/home/ashu/playbooks   ===>>
+[ashu@ip-172-31-93-233 playbooks]$ ls
+ansible.cfg  ashu-playbook1.yaml  hosts
+
+=======>> hosts --->
+[ashu-server]
+192.168.100.2
+192.168.101.2
+
+====> ansible.cfg
+
+[defaults]
+inventory = /home/ashu/playbooks/hosts
+remote_user = root
+```
+
