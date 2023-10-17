@@ -32,3 +32,46 @@ ansible-2.9.27-1.el7.noarch
 /etc/ansible/ansible.cfg
 /etc/ansible/hosts
 ```
+
+
+### checking ansible version 
+
+```
+[ashu@ip-172-31-93-233 ~]$ ansible --version 
+ansible 2.9.27
+  config file = /etc/ansible/ansible.cfg
+  configured module search path = [u'/home/ashu/.ansible/plugins/modules', u'/usr/share/ansible/plugins/modules']
+  ansible python module location = /usr/lib/python2.7/site-packages/ansible
+  executable location = /usr/bin/ansible
+  python version = 2.7.18 (default, Feb 28 2023, 02:51:06) [GCC 7.3.1 20180712 (Red Hat 7.3.1-15)]
+```
+
+### Ansible version details 
+
+<img src="v1.png">
+
+### Ansible connectors 
+
+<img src="cnc.png">
+
+### Ansible Inventory file 
+
+```
+[ashu@ip-172-31-93-233 ~]$ rpm -qc  ansible
+/etc/ansible/ansible.cfg
+/etc/ansible/hosts
+[ashu@ip-172-31-93-233 ~]$ cd  /etc/ansible/
+[ashu@ip-172-31-93-233 ansible]$ ls
+ansible.cfg  **hosts**  roles
+[ashu@ip-172-31-93-233 ansible]$ 
+
+
+```
+
+### ansible config file 
+
+```
+[ashu@ip-172-31-93-233 ~]$ rpm -qc  ansible
+/etc/ansible/ansible.cfg
+```
+
