@@ -81,3 +81,57 @@ ansible.cfg  **hosts**  roles
 
 
 
+### for secure and password less connection by ansible machine try to create ssh-keypair in ansible host machine
+
+```
+
+[ashu@ip-172-31-93-233 ~]$ ssh-keygen 
+Generating public/private rsa key pair.
+Enter file in which to save the key (/home/ashu/.ssh/id_rsa): 
+Enter passphrase (empty for no passphrase): 
+Enter same passphrase again: 
+Your identification has been saved in /home/ashu/.ssh/id_rsa.
+Your public key has been saved in /home/ashu/.ssh/id_rsa.pub.
+The key fingerprint is:
+SHA256:iL9SFe2T5Ggmn2asWuoCh57Ff3PgnCBnmMyiZNzBGxY ashu@ip-172-31-93-233.ec2.internal
+The key's randomart image is:
++---[RSA 2048]----+
+|         .       |
+|   E    . o      |
+|  . .    * .     |
+|   = ...= =      |
+|..* B .BS. .     |
+|o=.@ =..*        |
+|=o+ =.*+o        |
+|.o. .+.B .       |
+|   o+oo o        |
++----[SHA256]-----+
+
+```
+
+### transfer public key to remote target machines
+
+```
+[ashu@ip-172-31-93-233 ~]$ ssh-copy-id   root@192.168.100.2 
+/usr/bin/ssh-copy-id: INFO: Source of key(s) to be installed: "/home/ashu/.ssh/id_rsa.pub"
+/usr/bin/ssh-copy-id: INFO: attempting to log in with the new key(s), to filter out any that are already installed
+/usr/bin/ssh-copy-id: INFO: 1 key(s) remain to be installed -- if you are prompted now it is to install the new keys
+root@192.168.100.2's password: 
+
+Number of key(s) added: 1
+
+Now try logging into the machine, with:   "ssh 'root@192.168.100.2'"
+and check to make sure that only the key(s) you wanted were added.
+
+[ashu@ip-172-31-93-233 ~]$ 
+[ashu@ip-172-31-93-233 ~]$ ssh-copy-id   root@192.168.101.2 
+/usr/bin/ssh-copy-id: INFO: Source of key(s) to be installed: "/home/ashu/.ssh/id_rsa.pub"
+/usr/bin/ssh-copy-id: INFO: attempting to log in with the new key(s), to filter out any that are already installed
+/usr/bin/ssh-copy-id: INFO: 1 key(s) remain to be installed -- if you are prompted now it is to install the new keys
+root@192.168.101.2's password: 
+
+Number of key(s) added: 1
+
+Now try logging into the machine, with:   "ssh 'ro
+```
+
