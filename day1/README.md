@@ -247,3 +247,12 @@ ansible-playbook -u root  ashu-playbook1.yaml
 ansible-playbook  ashu-playbook1.yaml
 ```
 
+
+### checking syntax of the playbook 
+
+```
+ansible-playbook --syntax-check  ashu-playbook1.yaml 
+
+playbook: ashu-playbook1.yaml
+
+```
