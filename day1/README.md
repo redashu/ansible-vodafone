@@ -185,3 +185,17 @@ Now try logging into the machine, with:   "ssh 'ro
 }
 
 ```
+
+### running command on target machine 
+
+```
+[ashu@ip-172-31-93-233 ~]$ ansible  test  -u root -m command -a "date"
+192.168.101.2 | CHANGED | rc=0 >>
+Tue Oct 17 07:37:20 UTC 2023
+192.168.100.2 | CHANGED | rc=0 >>
+Tue Oct 17 07:37:20 UTC 2023
+
+
+```
+
+
