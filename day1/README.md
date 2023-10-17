@@ -200,7 +200,50 @@ Tue Oct 17 07:37:20 UTC 2023
 
 ### What we need on the target system 
 
+<img src="need.png">
+
+### ansible python relation 
+
+<img src="rel.png">
+
+### Introduction to Ansible Playbook -- using YAML 
+
+<img src="play.png">
+
+## First ansible playbook to run two modules
+
+```
+---
+- name: choosing target hosts 
+  hosts: test 
+  tasks:
+  - name: using ping module to send ICMP request to all the test group targets
+    ping: 
+  - name: running a command on target linux host
+    command: date 
+
 ```
 
+### defining remote_user in playbook
+
+```
+---
+- name: choosing target hosts 
+  hosts: test 
+  remote_user: root 
+  tasks:
+  - name: using ping module to send ICMP request to all the test group targets
+    ping: 
+  - name: running a command on target linux host
+    command: date 
+
+
+```
+
+### running options
+
+```
+ansible-playbook -u root  ashu-playbook1.yaml
+ansible-playbook  ashu-playbook1.yaml
 ```
 
