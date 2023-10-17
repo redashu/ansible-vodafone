@@ -75,3 +75,9 @@ ansible.cfg  **hosts**  roles
 /etc/ansible/ansible.cfg
 ```
 
+### always try to connect ansible target machines from ansible host -- using SSh key based auth 
+
+<img src="c1.png">
+
+
+
