@@ -332,4 +332,45 @@ pkg: httpd
 ansible-playbook  register_var.yaml  --limit=192.168.101.2
 ```
 
+### task 2 -- using Register 
+
+```
+---
+- name: choosing target hosts 
+  hosts: ashu_apps
+  tasks:
+  - name: using ping module to send ICMP request to all the test group targets
+    ping: 
+  - name: creating user
+    user:
+     name: jack-ashu
+     password: "{{ '12345' | password_hash('sha512') }}"
+
+  - name: installing httpd software
+    yum:
+     name: httpd
+     state: present
+
+  - name: running data  date command 
+    command: date
+    register: x
+
+  - name: printing output 
+    debug: 
+     var: x.stdout
+
+  - name: copy data to targets 
+    copy:
+      content: "{{ x.stdout }}"
+      dest: /var/www/html/stdout.html  
+
+  - name: starting httpd
+    service:
+      name: httpd
+      state: started
+      enabled: yes
+
+```
+
+
 
