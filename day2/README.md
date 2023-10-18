@@ -107,3 +107,40 @@ Wed Oct 18 05:02:38 UTC 2023
 
 ```
 
+## apache httpd based ansible playbook
+
+### playbook -- 
+
+```
+[ashu@ip-172-31-93-233 playbooks]$ cat  apache_httpd.yaml 
+---
+- name: Install and configure apache httpd on selected groups
+  hosts: ashu_apps # this is my group from my inventory 
+  tasks: # we will be using all the modules to perform operations 
+  - name: update all the software
+    yum: 
+     name: '*'
+     state: latest 
+
+
+```
+
+### check syntax and run it 
+
+```
+[ashu@ip-172-31-93-233 playbooks]$ ansible-playbook --syntax-check apache_httpd.yaml 
+
+playbook: apache_httpd.yaml
+
+
+[ashu@ip-172-31-93-233 playbooks]$ ansible-playbook  apache_httpd.yaml 
+
+PLAY [Install and configure apache httpd on selected groups] ********************************************************************************
+
+TASK [Gathering Facts] **********************************************************************************************************************
+ok: [192.168.101.2]
+ok: [192.168.100.2]
+
+TASK [update all the software] **************************************************************************************************************
+
+```
