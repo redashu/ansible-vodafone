@@ -399,5 +399,9 @@ ansible-playbook  register_var.yaml  --limit=192.168.101.2
       var: my_users[-1] # printing only first location data refer  my_users[0] , my_users[0:2]
 ```
 
+### whenever we use array , list or dictonary then use loop to give values one by one 
+
+<img src="loop.png">
+
 
 
