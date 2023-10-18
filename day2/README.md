@@ -216,5 +216,39 @@ TASK [update all the software] *************************************************
 ansible-playbook  var_test1.yaml   -e "x=jack" -e z=2024
 ```
 
+## reading variables from external File 
+
+```
+[ashu@ip-172-31-93-233 playbooks]$ ls
+ansible.cfg  apache_httpd.yaml  ashu-playbook1.yaml  hosts  hosts1  pages  task1.yaml  var_test1.yaml  var_test2.yaml  vars
+
+[ashu@ip-172-31-93-233 playbooks]$ ls vars/
+myvar.yaml
+
+[ashu@ip-172-31-93-233 playbooks]$ cat  vars/myvar.yaml 
+myuser: ashu1
+mypass: Ok@12345
+
+
+[ashu@ip-172-31-93-233 playbooks]$ cat  var_test2.yaml 
+---
+- name: testing variables
+  hosts: ashu_apps
+  vars: # for creating variable
+   x: "ashuotshh"
+   z: 2023
+  vars_files: # reading variables from external file 
+  - vars/myvar.yaml
+  tasks:
+  - name: to print just value of variable 
+    debug:
+     var: x 
+  - name: using debug module 
+    debug: 
+     msg: 
+     - "Hello {{ x }} How are you ? In {{z}} "
+     - "Hey i want to create a user named {{ myuser }}"
+     - "{{myuser}} password must be {{mypass}} "
+```
 
 
