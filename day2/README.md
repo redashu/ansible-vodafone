@@ -171,4 +171,50 @@ TASK [update all the software] *************************************************
      dest: /var/www/html/index.html
 ```
 
+## Ansible Variables 
+
+### COnsidering YAML and Python -- for variable names validity 
+
+<img src="var1.png">
+
+### var1 demo
+
+```
+---
+- name: testing variables
+  hosts: ashu_apps
+  vars: # for creating variable
+   x: "ashuotshh"
+  tasks:
+  - name: using debug module 
+    debug: 
+     msg: "Hello {{ x }}"
+```
+
+### var 2 demo
+
+```
+---
+- name: testing variables
+  hosts: ashu_apps
+  vars: # for creating variable
+   x: "ashuotshh"
+   z: 2023
+  tasks:
+  - name: to print just value of variable 
+    debug:
+     var: x 
+  - name: using debug module 
+    debug: 
+     msg: "Hello {{ x }} How are you ? In {{z}} "
+
+```
+
+### we can replace variable values in runtime
+
+```
+ansible-playbook  var_test1.yaml   -e "x=jack" -e z=2024
+```
+
+
 
