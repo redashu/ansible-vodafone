@@ -404,4 +404,79 @@ ansible-playbook  register_var.yaml  --limit=192.168.101.2
 <img src="loop.png">
 
 
+## Using loops example 1
 
+```
+---
+- hosts: ashu_apps
+  vars:
+    my_software: 
+    - httpd
+    - vsftpd
+    - telnet 
+    my_users: # considering my_users as array 
+    - ashutoshh
+    - kumar
+    - ansible1
+    - harry
+    - jack
+
+  tasks:
+  - name: printing data
+    debug:
+     var: my_users
+
+  - name: printing data with particular location 
+    debug:
+      var: my_users[-1] # printing only first location data refer  my_users[0] , my_users[0:2]
+
+  - name: creating user
+    user:
+     name: "{{ item }}" 
+    loop: "{{ my_users }}" # for  item in my_users: print(item)
+
+  - name: installing software 
+    yum:
+      name: "{{ item }}"
+      state: present
+    loop: "{{ my_software }}" # loop 
+
+```
+
+### using loop 2 
+
+```
+---
+- hosts: ashu_apps
+  vars:
+    my_users: # considering my_users as array 
+    - ashutoshh
+    - kumar
+    - ansible1
+    - harry
+    - jack
+
+  tasks:
+  - name: printing data
+    debug:
+     var: my_users
+
+  - name: printing data with particular location 
+    debug:
+      var: my_users[-1] # printing only first location data refer  my_users[0] , my_users[0:2]
+
+  - name: creating user
+    user:
+     name: "{{ item }}" 
+    loop: "{{ my_users }}" # for  item in my_users: print(item)
+
+  - name: installing software 
+    yum:
+      name: "{{ item }}"
+      state: present
+    loop:
+      - httpd
+      - ftp
+      - vsftpd
+
+```
