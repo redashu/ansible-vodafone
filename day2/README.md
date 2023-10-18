@@ -251,4 +251,65 @@ mypass: Ok@12345
      - "{{myuser}} password must be {{mypass}} "
 ```
 
+### task1 solution 
+
+### structure 
+
+```
+[ashu@ip-172-31-93-233 playbooks]$ ls  task1
+data_vars  use_vars.yaml
+[ashu@ip-172-31-93-233 playbooks]$ ls  task1/data_vars/
+httpd.yaml  user.yaml
+[ashu@ip-172-31-93-233 playbooks]$ cat task1/data_vars/user.yaml 
+user_name: joe
+user_password: Hei@123
+[ashu@ip-172-31-93-233 playbooks]$ cat task1/data_vars/httpd.yaml 
+pkg: httpd
+[ashu@ip-172-31-93-233 playbooks]$ 
+
+
+```
+
+### use_vars.yaml
+
+```
+---
+- name: using variable to perform task
+  hosts: ashu_apps
+  vars_files:
+    - data_vars/user.yaml
+    - data_vars/httpd.yaml
+  tasks:
+    - name: creating user 
+      user:
+        name: "{{ user_name }}"
+        password: "{{ user_password | password_hash('sha512') }}"
+        # user_password is the name of variable
+    - name: Install "{{ pkg }}"
+      yum:
+        name: "{{ pkg }}"
+        state: present 
+    - name: service "{{ pkg }}" starting 
+      service:
+        name: "{{ pkg }}"
+        state: started
+        enabled: yes
+
+```
+
+### --
+
+```
+[ashu@ip-172-31-93-233 playbooks]$ cat task1/data_vars/user.yaml 
+user_name: joe
+user_password: Hei@123
+
+```
+
+### ---
+
+```
+[ashu@ip-172-31-93-233 playbooks]$ cat task1/data_vars/httpd.yaml 
+pkg: httpd
+```
 
