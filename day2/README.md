@@ -313,3 +313,23 @@ user_password: Hei@123
 pkg: httpd
 ```
 
+### Using Registry 
+
+```
+- hosts: ashu_apps
+  tasks:
+  - name: running date command 
+    command: date
+    register: ashu_out  # this variable will be created and store output of date command 
+  - name: printing data
+    debug: 
+     var: ashu_out  # printing values
+```
+
+### running play in a particular host 
+
+```
+ansible-playbook  register_var.yaml  --limit=192.168.101.2
+```
+
+
