@@ -144,3 +144,31 @@ ok: [192.168.100.2]
 TASK [update all the software] **************************************************************************************************************
 
 ```
+
+### final apache playbook
+
+```
+---
+- name: Install and configure apache httpd on selected groups
+  hosts: ashu_apps  # this is my group from my inventory 
+  tasks: # we will be using all the modules to perform operations 
+  - name: update all the software
+    yum: 
+     name: '*'
+     state: latest 
+  - name: Installing httpd software
+    yum: 
+     name: httpd
+     state: present 
+  - name: Start httpd service 
+    service:
+     name: httpd
+     state: started
+     enabled: yes
+  - name: copy webpage from ansible machine to both the target server
+    copy: 
+     src: pages/index.html
+     dest: /var/www/html/index.html
+```
+
+
