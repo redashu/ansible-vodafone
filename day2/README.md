@@ -480,3 +480,22 @@ ansible-playbook  register_var.yaml  --limit=192.168.101.2
       - vsftpd
 
 ```
+
+## facts gather 
+
+```
+---
+- hosts: localhost
+  tasks:
+    - name: taking hostname of target system as ansible facts
+      debug: 
+       var: ansible_all_ipv4_addresses 
+
+    - name: taking hostname
+      debug: 
+       msg: 
+         - "my ips are {{ item }} " 
+         - "my second ip is {{ ansible_all_ipv4_addresses[1]  }} " 
+      loop: "{{ ansible_all_ipv4_addresses }}"
+```
+
