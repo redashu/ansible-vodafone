@@ -87,3 +87,41 @@ ashu-project  playbooks
       msg: "hello world i am using host variable "
 ```
 
+### Example of host vars -- it has more preference than ansible.cfg
+
+```
+[ashu@ip-172-31-93-233 ashu-project]$ ls
+ansible.cfg  hosts  test_var.yaml
+
+[ashu@ip-172-31-93-233 ashu-project]$ cat  test_var.yaml 
+---
+- hosts: ashu_apps
+  tasks:
+  - name: using debug
+    debug:
+      msg: "hello world i am using host variable "
+
+  - name: checking target current loging user 
+    command: whoami
+    register: out
+
+  - name: checking user 
+    debug:
+      var: out.stdout
+
+
+[ashu@ip-172-31-93-233 ashu-project]$ cat hosts 
+[ashu_apps]
+192.168.100.2
+192.168.101.2 ansible_user=check
+
+
+[ashu@ip-172-31-93-233 ashu-project]$ cat  ansible.cfg 
+[defaults]
+inventory = /home/ashu/ashu-project/hosts
+remote_user = root 
+deprecation_warnings=False
+[ashu@ip-172-31-93-233 ashu-project]$ 
+
+
+```
