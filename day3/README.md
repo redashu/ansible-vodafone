@@ -125,3 +125,83 @@ deprecation_warnings=False
 
 
 ```
+
+### Group variables 
+
+```
+ashu@ip-172-31-93-233 ashu-project]$ cat  hosts 
+[ashu_apps]
+192.168.100.2
+192.168.101.2 ansible_user=check 
+
+
+[db_server]
+192.168.100.70
+192.168.101.70
+
+
+# definging group variable 
+[db_server:vars]
+x=100
+pkg=ftp
+
+```
+
+### Group variable concept 
+
+```
+[ashu@ip-172-31-93-233 ashu-project]$ cat  hosts 
+[ashu_apps]
+192.168.100.2
+192.168.101.2 ansible_user=check 
+
+
+[db_server]
+192.168.100.70
+192.168.101.70
+
+
+# definging group variable 
+[db_server:vars]
+x=100
+pkg=ftp
+
+
+[ashu@ip-172-31-93-233 ashu-project]$ ls
+ansible.cfg  hosts  test_var.yaml
+[ashu@ip-172-31-93-233 ashu-project]$ cp  test_var.yaml   group_test.yaml
+[ashu@ip-172-31-93-233 ashu-project]$ ls
+ansible.cfg  group_test.yaml  hosts  test_var.yaml
+
+[ashu@ip-172-31-93-233 ashu-project]$ vim group_test.yaml 
+[ashu@ip-172-31-93-233 ashu-project]$ cat  group_test.yaml 
+---
+- hosts: db_server
+  tasks:
+  - name: using debug
+    debug:
+      msg: "my first variable vaiuel is {{ x }} and second var value is {{ pkg }}"
+
+
+[ashu@ip-172-31-93-233 ashu-project]$ ansible-playbook  group_test.yaml 
+
+PLAY [db_server] ********************************************************************************************************************************************
+
+TASK [Gathering Facts] **************************************************************************************************************************************
+ok: [192.168.101.70]
+ok: [192.168.100.70]
+
+TASK [using debug] ******************************************************************************************************************************************
+ok: [192.168.100.70] => {
+    "msg": "my first variable vaiuel is 100 and second var value is ftp"
+}
+ok: [192.168.101.70] => {
+    "msg": "my first variable vaiuel is 100 and second var value is ftp"
+}
+
+PLAY RECAP **************************************************************************************************************************************************
+192.168.100.70             : ok=2    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+192.168.101.70             : ok=2    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+
+```
