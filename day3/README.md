@@ -296,3 +296,38 @@ z=101
 
 
 ```
+
+###  THe New method of implementing Host and group variables concept 
+
+```
+
+[ashu@ip-172-31-93-233 ashu-project]$ ls
+ansible.cfg  group_vars  hosts  host_vars
+[ashu@ip-172-31-93-233 ashu-project]$ tree 
+.
+├── ansible.cfg
+├── group_vars
+│   ├── ashu_apps
+│   ├── common
+│   └── db_server
+├── hosts
+└── host_vars
+
+2 directories, 5 files
+[ashu@ip-172-31-93-233 ashu-project]$ cat  hosts 
+[ashu_apps]
+192.168.100.2
+192.168.101.2 
+
+
+[db_server]
+192.168.100.70
+192.168.101.70  
+
+
+[common:children]
+ashu_apps
+db_server
+
+
+```
