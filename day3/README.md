@@ -44,3 +44,36 @@ localhost | SUCCESS => {
 
 ```
 
+### scope of variables 
+
+<img src="scope.png">
+
+### Host and groups variable in ansible 
+
+<img src="scope1.png">
+
+### creating new strucure 
+
+```
+[ashu@ip-172-31-93-233 ~]$ ls
+playbooks
+[ashu@ip-172-31-93-233 ~]$ mkdir  ashu-project 
+[ashu@ip-172-31-93-233 ~]$ ls
+ashu-project  playbooks
+
+[ashu@ip-172-31-93-233 ~]$ pwd
+/home/ashu
+
+[ashu@ip-172-31-93-233 ~]$ ls
+ashu-project  playbooks
+
+[ashu@ip-172-31-93-233 ~]$ 
+[ashu@ip-172-31-93-233 ~]$ cp -v playbooks/hosts  ashu-project/
+‘playbooks/hosts’ -> ‘ashu-project/hosts’
+[ashu@ip-172-31-93-233 ~]$ cp -v playbooks/ansible.cfg  ashu-project/
+‘playbooks/ansible.cfg’ -> ‘ashu-project/ansible.cfg’
+[ashu@ip-172-31-93-233 ~]$ 
+
+
+
+```
