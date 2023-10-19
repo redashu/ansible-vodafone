@@ -496,3 +496,36 @@ packages:
     when: myout.rc == 0 
 
 ```
+
+### Task 3 solution 
+
+```
+[ashu@ip-172-31-93-233 include_examples]$ cat group_vars/ashu_apps 
+data: vsftpd
+users:
+ - user1
+ - user2
+ - user3
+[ashu@ip-172-31-93-233 include_examples]$ 
+[ashu@ip-172-31-93-233 include_examples]$ cat  task3.yaml 
+---
+- hosts: ashu_apps
+  tasks:
+  - name: install "{{ data }}" in node2 
+    yum: 
+     name: "{{ data }}"
+     state: present
+    when: ansible_hostname == "fedora2"
+
+  - name: creating users in node1 only 
+    user:
+      name: "{{ item }}"
+      state: present 
+    loop: "{{ users }}"
+    when: "'192.168.100.2' in inventory_hostname "  # this inventory_hostname is magic variable which is holding all the IPs in current group
+[ashu@ip-172-31-93-233 include_examples]$ 
+
+
+```
+
+
