@@ -341,3 +341,46 @@ b: 5000
 
 
 ```
+
+### lets test it 
+
+```
+[ashu@ip-172-31-93-233 ashu-project]$ cat  test_playbook1.yaml 
+---
+- hosts: db_server
+  tasks:
+    - name: trying to test variable access 
+      debug: 
+       msg:
+         - "hey i am trying to get the value of pkg variable   {{ pkg }}" 
+         - "hey i am trying to get the value of x  variable {{ x }}"
+
+
+[ashu@ip-172-31-93-233 ashu-project]$ ansible-playbook  test_playbook1.yaml 
+
+PLAY [db_server] ********************************************************************************************************************************************
+
+TASK [Gathering Facts] **************************************************************************************************************************************
+ok: [192.168.101.70]
+ok: [192.168.100.70]
+
+TASK [trying to test variable access] ***********************************************************************************************************************
+ok: [192.168.100.70] => {
+    "msg": [
+        "hey i am trying to get the value of pkg variable   httpd", 
+        "hey i am trying to get the value of x  variable 200"
+    ]
+}
+ok: [192.168.101.70] => {
+    "msg": [
+        "hey i am trying to get the value of pkg variable   httpd", 
+        "hey i am trying to get the value of x  variable 200"
+    ]
+}
+
+PLAY RECAP **************************************************************************************************************************************************
+192.168.100.70             : ok=2    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+192.168.101.70             : ok=2    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+
+```
