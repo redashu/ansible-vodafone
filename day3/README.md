@@ -74,6 +74,16 @@ ashu-project  playbooks
 ‘playbooks/ansible.cfg’ -> ‘ashu-project/ansible.cfg’
 [ashu@ip-172-31-93-233 ~]$ 
 
+```
 
+### sample var_test yaml 
 
 ```
+---
+- hosts: ashu_apps
+  tasks:
+  - name: using debug
+    debug:
+      msg: "hello world i am using host variable "
+```
+
