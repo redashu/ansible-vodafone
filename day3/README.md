@@ -384,3 +384,86 @@ PLAY RECAP *********************************************************************
 
 
 ```
+
+### Magic variables 
+
+<img src="magic.png">
+
+### Using Include -- 
+
+```
+[ashu@ip-172-31-93-233 ashu-project]$ 
+[ashu@ip-172-31-93-233 ashu-project]$ 
+[ashu@ip-172-31-93-233 ashu-project]$ cd ..
+[ashu@ip-172-31-93-233 ~]$ ls
+ashu-project  backup  playbooks  task-day3
+[ashu@ip-172-31-93-233 ~]$ mkdir include_examples
+[ashu@ip-172-31-93-233 ~]$ cp -v ashu-project/ansible.cfg  include_examples/
+‘ashu-project/ansible.cfg’ -> ‘include_examples/ansible.cfg’
+[ashu@ip-172-31-93-233 ~]$ cp -v ashu-project/hosts  include_examples/
+‘ashu-project/hosts’ -> ‘include_examples/hosts’
+[ashu@ip-172-31-93-233 ~]$ cd include_examples/
+[ashu@ip-172-31-93-233 include_examples]$ ls
+ansible.cfg  hosts
+[ashu@ip-172-31-93-233 include_examples]$ cat hosts 
+[ashu_apps]
+192.168.100.2
+192.168.101.2 
+
+
+[db_server]
+192.168.100.70
+192.168.101.70  
+
+
+[common:children]
+ashu_apps
+db_server
+
+```
+
+### example of Include and include_vars 
+
+```
+[ashu@ip-172-31-93-233 include_examples]$ ls
+ansible.cfg  hosts  install_pkg.yaml  myvar.yaml  start_service.yaml  usevar_playbook.yaml
+[ashu@ip-172-31-93-233 include_examples]$ cat  myvar.yaml 
+---
+packages:
+  web_pkg: httpd
+  db_pkg: mariadb-server 
+[ashu@ip-172-31-93-233 include_examples]$ cat  install_pkg.yaml 
+---
+- name: install software  "{{ packages['web_pkg'] }}"
+  yum:
+    name: "{{ packages['web_pkg'] }}"
+    state: present
+[ashu@ip-172-31-93-233 include_examples]$ 
+[ashu@ip-172-31-93-233 include_examples]$ 
+[ashu@ip-172-31-93-233 include_examples]$ cat start_service.yaml 
+---
+- name: starting service  "{{ packages['web_pkg'] }}"
+  service:
+    name: "{{ packages['web_pkg'] }}"
+    state: started
+    enabled: yes
+[ashu@ip-172-31-93-233 include_examples]$ cat  usevar_playbook.yaml 
+---
+- hosts: ashu_apps
+  tasks:
+    - name: calling include statement
+      include_vars: myvar.yaml
+
+    - name: using those vars
+      debug:
+        msg: "using  variables {{ packages['web_pkg'] }}"
+
+    - name: install "{{ packages['web_pkg'] }}"
+      include: install_pkg.yaml
+
+    - name: starting  "{{ packages['web_pkg'] }}"
+      include: start_service.yaml
+
+```
+
+
