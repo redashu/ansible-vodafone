@@ -246,3 +246,53 @@ x=100
 pkg=ftp
 
 ```
+
+
+### final host and group vars example 
+
+```
+[ashu@ip-172-31-93-233 ashu-project]$ cat  hosts 
+[ashu_apps]
+192.168.100.2
+192.168.101.2 ansible_user=check 
+
+
+[db_server]
+192.168.100.70
+192.168.101.70  x=500  # host variables 
+
+
+# definging group variable 
+[db_server:vars]
+x=100
+pkg=ftp
+
+
+# create a children group 
+[common:children]
+ashu_apps
+db_server
+
+
+# lets define varibales
+[common:vars]
+data=hello
+z=101
+[ashu@ip-172-31-93-233 ashu-project]$ 
+[ashu@ip-172-31-93-233 ashu-project]$ cat  group_test.yaml 
+---
+- hosts: db_server
+  tasks:
+  - name: using debug
+    debug:
+      msg: "my first variable vaiuel is {{ x }} and second var value is {{ pkg }}"
+
+# creating a new playgroup 
+- hosts: all
+  tasks:
+  - name: all the nodes in both is having access of z variable 
+    debug:
+      msg: "hello z is accessible from the node {{ ansible_hostname }} having value {{ z }}"
+
+
+```
