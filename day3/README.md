@@ -466,4 +466,33 @@ packages:
 
 ```
 
+## Understanding conditional statement 
 
+<img src="cond.png">
+
+### using when with ignore_errors
+
+```
+---
+- hosts: ashu_apps
+  vars:
+    x1: "ftp1"
+  tasks:
+  - name: installing
+    yum:
+     name: "{{ x1 }}"
+     state: present 
+    ignore_errors: yes # if this tasks fails do not terminate playbook running 
+    register: myout 
+
+  - name: show
+    debug: 
+     var: myout 
+
+  - name: start httpd service if installation of ftp happend successfully
+    service:
+      name: httpd
+      state: started
+    when: myout.rc == 0 
+
+```
