@@ -300,9 +300,6 @@ z=101
 ###  THe New method of implementing Host and group variables concept 
 
 ```
-
-[ashu@ip-172-31-93-233 ashu-project]$ ls
-ansible.cfg  group_vars  hosts  host_vars
 [ashu@ip-172-31-93-233 ashu-project]$ tree 
 .
 ├── ansible.cfg
@@ -328,6 +325,19 @@ ansible.cfg  group_vars  hosts  host_vars
 [common:children]
 ashu_apps
 db_server
+
+
+[ashu@ip-172-31-93-233 ashu-project]$ cat  group_vars/db_server 
+pkg: httpd
+x: 200
+[ashu@ip-172-31-93-233 ashu-project]$ cat  group_vars/ashu_apps 
+pkg: ftp
+y: 201
+x: 400
+[ashu@ip-172-31-93-233 ashu-project]$ cat  group_vars/common 
+scan_net: nmap
+data: hello
+b: 5000
 
 
 ```
