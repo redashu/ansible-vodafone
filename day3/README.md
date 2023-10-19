@@ -205,3 +205,44 @@ PLAY RECAP *********************************************************************
 
 
 ```
+
+### hosts vs groups variables and their precedence 
+
+```
+[ashu@ip-172-31-93-233 ashu-project]$ ansible-playbook  group_test.yaml 
+
+PLAY [db_server] ********************************************************************************************************************************************
+
+TASK [Gathering Facts] **************************************************************************************************************************************
+ok: [192.168.101.70]
+ok: [192.168.100.70]
+
+TASK [using debug] ******************************************************************************************************************************************
+ok: [192.168.100.70] => {
+    "msg": "my first variable vaiuel is 100 and second var value is ftp"
+}
+ok: [192.168.101.70] => {
+    "msg": "my first variable vaiuel is 500 and second var value is ftp"
+}
+
+PLAY RECAP **************************************************************************************************************************************************
+192.168.100.70             : ok=2    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+192.168.101.70             : ok=2    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+[ashu@ip-172-31-93-233 ashu-project]$ cat  hosts 
+[ashu_apps]
+192.168.100.2
+192.168.101.2 ansible_user=check 
+
+
+[db_server]
+192.168.100.70
+192.168.101.70  x=500  # host variables 
+
+
+# definging group variable 
+[db_server:vars]
+x=100
+pkg=ftp
+
+```
