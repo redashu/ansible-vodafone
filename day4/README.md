@@ -240,4 +240,57 @@ users:
 
 ```
 
+### a better solution 
+
+```
+---
+- hosts: ashu_server
+  become: true
+  handlers: # this is trigger by notify keyword changes detection 
+  - name: ashu_restart_httpd 
+    service:
+      name: "{{ pkg }}"
+      state: restarted 
+
+  - name: ashu_user_created
+    lineinfile:
+      line: " {{ item }}"
+      path: /var/www/html/user1.html
+    loop: "{{ users }}"
+
+
+  tasks:
+  - name: printing general message
+    debug: 
+     msg:  
+      - "hello {{ inventory_hostname }}"
+      - "ashutoshh machine is running "
+  - name: install {{ pkg }}
+    yum: 
+     name: "{{ pkg }}" 
+     state: present 
+
+  - name: copy web page to apache httpd server 
+    copy: 
+     src:  web/index.html 
+     dest: /var/www/html/ 
+    notify: # to detect changes in this task 
+    - ashu_restart_httpd 
+
+  - name: starting "{{ pkg }}"
+    service:
+     name: "{{ pkg }}"
+     state: started
+     enabled: true
+
+  - name: creating users 
+    user:
+      name: "{{ item}}"
+      state: present 
+    loop: "{{ users }}"
+    notify:
+    - ashu_user_created
+
+
+```
 
