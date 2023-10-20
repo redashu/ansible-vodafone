@@ -102,3 +102,82 @@ become_user=root
 ```
 
 
+## demo Handlers
+
+### sample playbook
+
+```
+[ashu@ip-172-31-93-233 day4-case1]$ cat  group_vars/ashu_server 
+pkg: httpd
+[ashu@ip-172-31-93-233 day4-case1]$ cat handler_playbook.yaml 
+---
+- hosts: 192.168.101.2 
+  become: true
+  tasks:
+  - name: printing general message
+    debug: 
+     msg:  
+      - "hello {{ inventory_hostname }}"
+      - "ashutoshh machine is running "
+  - name: install {{ pkg }}
+    yum: 
+     name: "{{ pkg }}" 
+     state: present 
+
+  - name: copy web page to apache httpd server 
+    copy: 
+     src:  web/index.html 
+     dest: /var/www/html/ 
+
+  - name: starting "{{ pkg }}"
+    service:
+     name: "{{ pkg }}"
+     state: started
+     enabled: true 
+
+[ashu@ip-172-31-93-233 day4-case1]$ cat  web/index.html 
+<h1>  Hello world  this is ashutoshh  </h1>
+[ashu@ip-172-31-93-233 day4-case1]$ 
+
+```
+
+### adding handler 
+
+```
+---
+- hosts: ashu_server
+  become: true
+  tasks:
+  - name: printing general message
+    debug: 
+     msg:  
+      - "hello {{ inventory_hostname }}"
+      - "ashutoshh machine is running "
+  - name: install {{ pkg }}
+    yum: 
+     name: "{{ pkg }}" 
+     state: present 
+
+  - name: copy web page to apache httpd server 
+    copy: 
+     src:  web/index.html 
+     dest: /var/www/html/ 
+    notify: # to detect changes in this task 
+    - ashu_restart_httpd 
+
+  - name: starting "{{ pkg }}"
+    service:
+     name: "{{ pkg }}"
+     state: started
+     enabled: true
+
+  handlers: # this is trigger by notify keyword changes detection 
+  - name: ashu_restart_httpd 
+    service:
+      name: "{{ pkg }}"
+      state: restarted 
+
+
+```
+
+
