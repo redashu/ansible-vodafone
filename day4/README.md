@@ -294,3 +294,86 @@ users:
 
 ```
 
+### running specific part of playbook 
+
+### understnading tags
+
+<img src="tags.png">
+
+### playbook
+
+```
+---
+- hosts: ashu_server
+  become: true
+  handlers: # this is trigger by notify keyword changes detection 
+  - name: ashu_restart_httpd 
+    service:
+      name: "{{ pkg }}"
+      state: restarted 
+
+  - name: ashu_user_created
+    file:
+      path: /var/www/html/user1.html 
+      state: touch
+  - name: ashu_user_created
+    lineinfile:
+      line: " {{ item }}"
+      path: /var/www/html/user1.html
+    loop: "{{ users }}"
+
+
+  tasks:
+  - name: printing general message
+    debug: 
+     msg:  
+      - "hello {{ inventory_hostname }}"
+      - "ashutoshh machine is running "
+  - name: install {{ pkg }}
+    yum: 
+     name: "{{ pkg }}" 
+     state: present 
+
+  - name: copy web page to apache httpd server 
+    copy: 
+     src:  web/index.html 
+     dest: /var/www/html/ 
+    notify: # to detect changes in this task 
+    - ashu_restart_httpd 
+
+  - name: starting "{{ pkg }}"
+    service:
+     name: "{{ pkg }}"
+     state: started
+     enabled: true
+    tags:
+    - ashu_start
+
+  - name: creating users 
+    user:
+      name: "{{ item}}"
+      state: present 
+    loop: "{{ users }}"
+    notify:
+    - ashu_user_created
+    tags: # to call the task while running playbokk
+    - ashu_start
+
+
+```
+
+### commands
+
+```
+1293  ansible-playbook handler_playbook.yaml --list-tags
+
+ 1295  ansible-playbook handler_playbook.yaml  --tags "ashu_user_test"
+ 1296  ansible-playbook handler_playbook.yaml  --tags "ashu_user_test" --tags "ashu_start"
+ 1297  history 
+ 1298  ansible-playbook handler_playbook.yaml  --skip-tags "ashu_user_test" 
+ 1299  vim handler_playbook.yaml 
+ 1300  ansible-playbook handler_playbook.yaml  --tags "ashu_start"
+
+
+```
+
