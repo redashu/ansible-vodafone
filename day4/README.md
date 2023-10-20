@@ -377,3 +377,58 @@ users:
 
 ```
 
+### using include with handlers and tags
+
+```
+[ashu@ip-172-31-93-233 day4-case2]$ ls
+ansible.cfg  copy.yaml  group_vars  hosts  host_vars  httpd.yaml  main.yaml
+
+[ashu@ip-172-31-93-233 day4-case2]$ cat  httpd.yaml 
+---
+- name: install "{{ pkg }}"
+  yum:
+    name: "{{pkg}}"
+    state: installed
+
+- name: starting  "{{ pkg }}"
+  service:
+    name: "{{pkg}}"
+    state: started
+    enabled: yes
+
+
+[ashu@ip-172-31-93-233 day4-case2]$ cat  copy.yaml 
+---
+- name: creating index.html to apache httpd
+  copy:
+    content: "hello worl this is apache httpd with ansible "
+    dest: /var/www/html/index.html 
+  notify:
+    - copy_new_data
+
+
+
+[ashu@ip-172-31-93-233 day4-case2]$ cat  main.yaml 
+---
+- name: targeting my hosts
+  hosts: ashu_server
+  handlers:
+  - name: copy_new_data # calling change in copy data 
+    service:
+     name: "{{pkg}}"
+     state: restarted
+
+  tasks:
+  - name: Installing httpd 
+    include: httpd.yaml 
+    tags:
+      - call_for_install
+
+  - name: copy web page to  httpd 
+    include: copy.yaml 
+    tags:
+      - call_for_copy
+
+
+```
+
