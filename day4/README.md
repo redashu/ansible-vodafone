@@ -61,4 +61,44 @@ ashu_db
 
 <img src="prv.png">
 
+### Adding privileges part in ansible.cfg
+
+```
+[defaults]
+inventory = ./hosts
+remote_user = test
+deprecation_warnings=False
+
+
+[privilege_escalation]
+become=True
+become_method=sudo
+become_user=root
+
+```
+
+### always use become method in playbooks
+
+```
+---
+- hosts: 192.168.101.2 
+  become: true
+  tasks:
+  - name: printing general message
+    debug: 
+     msg:  
+      - "hello {{ inventory_hostname }}"
+      - "ashutoshh machine is running "
+
+  - name: uninstall httpd and vsftpd , ftp 
+    yum:
+      name: "{{ item }}"
+      state: installed 
+    loop:
+      - httpd
+      - vsftpd 
+      - ftp
+
+```
+
 
