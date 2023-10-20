@@ -180,4 +180,64 @@ pkg: httpd
 
 ```
 
+### handles tasks
+
+```
+[ashu@ip-172-31-93-233 day4-case1]$ cat group_vars/ashu_server 
+pkg: httpd
+
+users:
+ - u001
+ - u002
+ - u003
+ - u004
+[ashu@ip-172-31-93-233 day4-case1]$ cat  handler_playbook.yaml 
+---
+- hosts: ashu_server
+  become: true
+  handlers: # this is trigger by notify keyword changes detection 
+  - name: ashu_restart_httpd 
+    service:
+      name: "{{ pkg }}"
+      state: restarted 
+  - name: ashu_user_created
+    copy:
+      content: "my user details are --->> {{ users }}"
+      dest: /var/www/html/user.html
+
+  tasks:
+  - name: printing general message
+    debug: 
+     msg:  
+      - "hello {{ inventory_hostname }}"
+      - "ashutoshh machine is running "
+  - name: install {{ pkg }}
+    yum: 
+     name: "{{ pkg }}" 
+     state: present 
+
+  - name: copy web page to apache httpd server 
+    copy: 
+     src:  web/index.html 
+     dest: /var/www/html/ 
+    notify: # to detect changes in this task 
+    - ashu_restart_httpd 
+
+  - name: starting "{{ pkg }}"
+    service:
+     name: "{{ pkg }}"
+     state: started
+     enabled: true
+
+  - name: creating users 
+    user:
+      name: "{{ item}}"
+      state: present 
+    loop: "{{ users }}"
+    notify:
+    - ashu_user_created
+
+
+```
+
 
