@@ -56,3 +56,9 @@ ashu_db
 2 directories, 10 files
 
 ```
+
+### Understanding privileges escalation in ansible 
+
+<img src="prv.png">
+
+
