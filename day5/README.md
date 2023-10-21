@@ -196,10 +196,73 @@ ashu-web/
 ├── tests
 │   ├── inventory
 │   └── test.yml
-└── vars
+└── vars  
     └── main.yml
 
 8 directories, 8 files
+
+```
+
+### filling content 
+
+```
+[ashu@ip-172-31-93-233 ashu-web]$ tree 
+.
+├── defaults
+│   └── main.yml
+├── files
+├── handlers
+│   └── main.yml
+├── meta
+│   └── main.yml
+├── README.md
+├── tasks
+│   └── main.yml
+├── templates
+│   └── ashu_website.j2
+├── tests
+│   ├── inventory
+│   └── test.yml
+└── vars
+    └── main.yml
+
+8 directories, 9 files
+[ashu@ip-172-31-93-233 ashu-web]$ cat  defaults/main.yml 
+---
+apache_pkg: httpd
+# defaults file for ashu-web
+[ashu@ip-172-31-93-233 ashu-web]$ cat  templates/
+cat: templates/: Is a directory
+[ashu@ip-172-31-93-233 ashu-web]$ cat  templates/ashu_website.j2 
+<h1> hello {{ ansible_hostname }} </h1>
+[ashu@ip-172-31-93-233 ashu-web]$ 
+[ashu@ip-172-31-93-233 ashu-web]$ cat  handlers/main.yml 
+---
+- name: restart httpd
+  service:
+   name: "{{ apache_pkg }}"
+   state: restarted 
+# handlers file for ashu-web
+[ashu@ip-172-31-93-233 ashu-web]$ cat  tasks/main.yml 
+---
+- name: installing apache httpd
+  yum:
+   name: "{{ apache_pkg }}"
+   state: installed
+
+- name: starting httpd 
+  service:
+   name: " {{ apache_pkg }}"
+   state: started
+   enabled: yes
+
+- name: copy index page using jijna 
+  template:
+   src: ashu_website.j2
+   dest: /var/www/html/index.html 
+  notify: restart httpd 
+   
+# tasks file for ashu-web
 
 ```
 
