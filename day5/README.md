@@ -125,5 +125,35 @@ cars:
 
 ```
 
+### creating config file using jinja template 
+
+```
+[ashu@ip-172-31-93-233 day5-final]$ cat  jinja_examples/ashu_httpd.j2 
+<virtualhost *:{{ http_port }}>
+   servername  {{ ansible_hostname }}
+   documentroot {{ location  }}
+
+</virtualhost>
+[ashu@ip-172-31-93-233 day5-final]$ 
+[ashu@ip-172-31-93-233 day5-final]$ cat  for_jinja_play.yaml 
+---
+- hosts: ashu_extras
+  become: true
+  tasks:
+  - name: starting httpd
+    service: 
+     name: httpd
+     state: started
+  - name: using jinja template 
+    template: 
+     src: jinja_examples/use_car.j2
+     dest: /var/www/html/car.html 
+       
+  - name: using jinja template  to create new apache httpd conf file 
+    template: 
+     src: jinja_examples/ashu_httpd.j2
+     dest: /etc/httpd/conf.d/ashu_httpd.conf 
+```
+
 
 
