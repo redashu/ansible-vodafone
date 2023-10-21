@@ -266,6 +266,16 @@ cat: templates/: Is a directory
 
 ```
 
+### Now calling roles 
+
+```
+---
+- hosts: 192.168.101.2 
+  become: true
+  roles:
+  - ashu-web
+```
+
 
 
 
