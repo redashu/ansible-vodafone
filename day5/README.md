@@ -155,5 +155,54 @@ cars:
      dest: /etc/httpd/conf.d/ashu_httpd.conf 
 ```
 
+### creating role config location file
+
+```
+[ashu@ip-172-31-93-233 roles]$ cat  ../ansible.cfg 
+[defaults]
+inventory = ./hosts
+remote_user = test
+deprecation_warnings=False
+forks = 7 
+roles_path = ./roles
+
+[privilege_escalation]
+#become=True
+#become_method=sudo
+#become_user=root
+
+```
+
+### creating role in roles folder 
+
+```
+[ashu@ip-172-31-93-233 roles]$ ansible-galaxy   init  ashu-web
+- Role ashu-web was created successfully
+[ashu@ip-172-31-93-233 roles]$ ls
+ashu-web
+[ashu@ip-172-31-93-233 roles]$ tree  ashu-web/
+ashu-web/
+├── defaults
+│   └── main.yml
+├── files
+├── handlers
+│   └── main.yml
+├── meta
+│   └── main.yml
+├── README.md
+├── tasks
+│   └── main.yml
+├── templates
+├── tests
+│   ├── inventory
+│   └── test.yml
+└── vars
+    └── main.yml
+
+8 directories, 8 files
+
+```
+
+
 
 
