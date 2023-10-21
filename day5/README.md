@@ -73,3 +73,26 @@
 
 ```
 
+### jinja template 
+
+ashu_msg.j2
+```
+this is my ansible target having value {{ ansible_hostname }}
+```
+
+### using in playbook 
+
+```
+---
+- hosts: all
+  become: true
+  tasks:
+  - name: using jinja template 
+    template: 
+     src: jinja_examples/ashu_msg.j2
+     dest: /etc/motd
+
+```
+
+
+
