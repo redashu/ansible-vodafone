@@ -94,5 +94,36 @@ this is my ansible target having value {{ ansible_hostname }}
 
 ```
 
+## using one more example 
+
+```
+[ashu@ip-172-31-93-233 day5-final]$ cat  jinja_examples/use_car.j2 
+{% for i  in  cars  %}
+   <h1>  {{ i }}  </h1> 
+
+{% endfor %}
+[ashu@ip-172-31-93-233 day5-final]$ 
+[ashu@ip-172-31-93-233 day5-final]$ cat  group_vars/ashu_extras 
+cars:
+ - maruit
+ - bmw
+ - honda
+ - kia 
+[ashu@ip-172-31-93-233 day5-final]$ cat  for_jinja_play.yaml 
+---
+- hosts: ashu_extras
+  become: true
+  tasks:
+  - name: starting httpd
+    service: 
+     name: httpd
+     state: started
+  - name: using jinja template 
+    template: 
+     src: jinja_examples/use_car.j2
+     dest: /var/www/html/car.html 
+
+```
+
 
 
