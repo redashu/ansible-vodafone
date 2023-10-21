@@ -1,0 +1,19 @@
+---
+- name: installing apache httpd
+  yum:
+   name: "{{ apache_pkg }}"
+   state: installed
+
+- name: starting httpd 
+  service:
+   name: "{{ apache_pkg }}"
+   state: started
+   enabled: yes
+
+- name: copy index page using jijna 
+  template:
+   src: ashu_website.j2
+   dest: /var/www/html/index.html 
+  notify: restart httpd 
+   
+# tasks file for ashu-web

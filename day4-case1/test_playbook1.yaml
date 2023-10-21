@@ -1,0 +1,18 @@
+---
+- hosts: 192.168.101.2 
+  become: true
+  tasks:
+  - name: printing general message
+    debug: 
+     msg:  
+      - "hello {{ inventory_hostname }}"
+      - "ashutoshh machine is running "
+
+  - name: uninstall httpd and vsftpd , ftp 
+    yum:
+      name: "{{ item }}"
+      state: installed 
+    loop:
+      - httpd
+      - vsftpd 
+      - ftp

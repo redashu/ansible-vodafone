@@ -1,0 +1,30 @@
+---
+- hosts: ashu_server,ashu_demo
+  become: true 
+  #ignore_errors: yes
+  tasks:
+  - block: # collection of task -- here you implement when , tags, notify etc undre block 
+    - name: installing "{{ soft }}"
+      yum:
+       name: "{{ soft }}"
+       state: installed 
+      register: out
+
+    - name: priting status
+      debug:
+       var: out 
+    rescue:  # if tasks under block got failed then rescue will be trigger 
+    - name: ashu_custom_repo  
+      yum_repository:
+       name:  ashu_repo
+       baseurl: https://pkgs.k8s.io/core:/stable:/v1.28/rpm/
+       description: ashu repo for kubectl 
+       gpgcheck: yes
+       enabled: yes
+       state: present 
+       gpgkey: https://pkgs.k8s.io/core:/stable:/v1.28/rpm/repodata/repomd.xml.key
+
+    always: # either block or resuce anything is running or not alwayes will be always executed
+    - name: i am unstoppable 
+      debug:
+        msg: "My life is easy"

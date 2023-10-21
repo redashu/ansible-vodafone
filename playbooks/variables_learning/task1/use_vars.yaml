@@ -1,0 +1,21 @@
+---
+- name: using variable to perform task
+  hosts: ashu_apps
+  vars_files:
+    - data_vars/user.yaml
+    - data_vars/httpd.yaml
+  tasks:
+    - name: creating user 
+      user:
+        name: "{{ user_name }}"
+        password: "{{ user_password | password_hash('sha512') }}"
+    - name: Install "{{ pkg }}"
+      yum:
+        name: "{{ pkg }}"
+        state: present 
+    - name: service "{{ pkg }}" starting 
+      service:
+        name: "{{ pkg }}"
+        state: started
+        enabled: yes
+    

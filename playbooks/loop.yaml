@@ -1,0 +1,20 @@
+---
+- hosts: ashu_apps
+  vars:
+    my_software: 
+    - httpd
+    - vsftpd
+    - telnet 
+    my_users: # considering my_users as array 
+    - ashutoshh
+    - kumar
+    - ansible1
+    - harry
+    - jack
+
+  tasks:
+  - name: printing data
+    debug:
+     msg: "my values are {{ item  }}"
+    loop: "{{ my_users }}" #  for item in my_users: print(item)  till ansible 2.5 -- after 2.5 
+

@@ -1,0 +1,20 @@
+---
+- name: targeting my hosts
+  hosts: ashu_server
+  handlers:
+  - name: copy_new_data # calling change in copy data 
+    service:
+     name: "{{pkg}}"
+     state: restarted
+
+  tasks:
+  - name: Installing httpd 
+    include: httpd.yaml 
+    tags:
+      - call_for_install
+
+  - name: copy web page to  httpd 
+    include: copy.yaml 
+    tags:
+      - call_for_copy
+

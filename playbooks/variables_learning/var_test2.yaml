@@ -1,0 +1,18 @@
+---
+- name: testing variables
+  hosts: ashu_apps
+  vars: # for creating variable
+   x: "ashuotshh"
+   z: 2023
+  vars_files: # reading variables from external file 
+  - ashu_vars/myvar.yaml
+  tasks:
+  - name: to print just value of variable 
+    debug:
+     var: x 
+  - name: using debug module 
+    debug: 
+     msg: 
+     - "Hello {{ x }} How are you ? In {{z}} "
+     - "Hey i want to create a user named {{ myuser }}"
+     - "{{myuser}} password must be {{mypass}} "

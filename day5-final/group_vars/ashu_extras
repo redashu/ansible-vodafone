@@ -1,0 +1,9 @@
+cars:
+ - maruit
+ - bmw
+ - honda
+ - kia 
+
+
+http_port: 80
+location: /var/www/html/

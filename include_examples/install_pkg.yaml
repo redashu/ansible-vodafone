@@ -1,0 +1,5 @@
+---
+- name: install software  "{{ packages['web_pkg'] }}"
+  yum:
+    name: "{{ packages['web_pkg'] }}"
+    state: present

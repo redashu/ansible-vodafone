@@ -1,0 +1,17 @@
+---
+- hosts: ashu_extras
+  become: true
+  tasks:
+  - name: starting httpd
+    service: 
+     name: httpd
+     state: started
+  - name: using jinja template 
+    template: 
+     src: jinja_examples/use_car.j2
+     dest: /var/www/html/car.html 
+       
+  - name: using jinja template  to create new apache httpd conf file 
+    template: 
+     src: jinja_examples/ashu_httpd.j2
+     dest: /etc/httpd/conf.d/ashu_httpd.conf 

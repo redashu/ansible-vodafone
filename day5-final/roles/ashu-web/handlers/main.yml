@@ -1,0 +1,6 @@
+---
+- name: restart httpd
+  service:
+   name: "{{ apache_pkg }}"
+   state: restarted 
+# handlers file for ashu-web

@@ -1,0 +1,11 @@
+---
+- name: install "{{ pkg }}"
+  yum:
+    name: "{{pkg}}"
+    state: installed
+
+- name: starting  "{{ pkg }}"
+  service:
+    name: "{{pkg}}"
+    state: started
+    enabled: yes

@@ -1,0 +1,14 @@
+---
+- hosts: db_server
+  tasks:
+  - name: using debug
+    debug:
+      msg: "my first variable vaiuel is {{ x }} and second var value is {{ pkg }}"
+
+# creating a new playgroup 
+- hosts: common
+  tasks:
+  - name: all the nodes in both is having access of z variable 
+    debug:
+      msg: "hello z is accessible from the node {{ ansible_hostname }} having value {{ z }}"
+

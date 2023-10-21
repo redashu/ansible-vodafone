@@ -1,0 +1,14 @@
+---
+- hosts: all
+  become: true
+  tasks:
+  - name: copy in node1
+    template:
+      src: jinja_examples/index.html.j2
+      dest: /var/www/html/index.html 
+    when: ansible_hostname == "centos2"
+
+  - name: using jinja template 
+    template: 
+     src: jinja_examples/ashu_msg.j2
+     dest: /etc/motd

@@ -1,0 +1,8 @@
+---
+- name: creating index.html to apache httpd
+  copy:
+    content: "hello worl this is apache httpd with ansible "
+    dest: /var/www/html/index.html 
+  notify:
+    - copy_new_data
+

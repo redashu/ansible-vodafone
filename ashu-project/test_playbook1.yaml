@@ -1,0 +1,14 @@
+---
+- hosts: common
+  gather_facts: no # manually turning off facts collection  -- it will not going to call setup module 
+  tasks:
+    - name: installing software in all the nodes
+      yum:
+        name: "{{ pkg }}"
+        state: present
+
+    - name: trying to test variable access 
+      debug: 
+       msg:
+         - "hey i am trying to get the value of pkg variable   {{ pkg }}" 
+         - "hey i am trying to get the value of x  variable {{ x }}" 

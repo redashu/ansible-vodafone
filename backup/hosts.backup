@@ -1,0 +1,26 @@
+[ashu_apps]
+192.168.100.2
+192.168.101.2 ansible_user=check 
+
+
+[db_server]
+192.168.100.70
+192.168.101.70  x=500  # host variables 
+
+
+# definging group variable 
+[db_server:vars]
+x=100
+pkg=ftp
+
+
+# create a children group 
+[common:children]
+ashu_apps
+db_server
+
+
+# lets define varibales
+[common:vars]
+data=hello
+z=101

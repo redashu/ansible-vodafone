@@ -1,0 +1,6 @@
+---
+- name: starting service  "{{ packages['web_pkg'] }}"
+  service:
+    name: "{{ packages['web_pkg'] }}"
+    state: started
+    enabled: yes

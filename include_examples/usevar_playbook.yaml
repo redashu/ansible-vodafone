@@ -1,0 +1,20 @@
+---
+- hosts: ashu_apps
+  gather_facts: no
+  vars:
+    x: true
+    y: "hello"
+    z: 0
+  tasks:
+
+    - name: using those vars
+      debug:
+        msg: "using  variables {{ packages['web_pkg'] }}"
+
+    - name: install "{{ packages['web_pkg'] }}"
+      include: install_pkg.yaml
+      when: z 
+
+    - name: starting  "{{ packages['web_pkg'] }}"
+      include: start_service.yaml
+      when: y is defined  

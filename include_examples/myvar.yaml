@@ -1,0 +1,4 @@
+---
+packages:
+  web_pkg: httpd
+  db_pkg: mariadb-server 

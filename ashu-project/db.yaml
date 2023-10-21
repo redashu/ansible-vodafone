@@ -1,0 +1,21 @@
+---
+- name: Install and configure MariaDB Server
+  hosts: 192.168.100.2
+
+  tasks:
+    - name: Install MariaDB Server
+      yum:
+        name: mariadb-server
+        state: absent
+
+    - name: Start MariaDB service
+      service:
+        name: mariadb
+        state: started
+        enabled: yes
+
+    - name: Secure MariaDB installation
+      command: mysql_secure_installation
+      args:
+        creates: /root/.my.cnf
+

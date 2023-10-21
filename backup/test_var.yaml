@@ -1,0 +1,14 @@
+---
+- hosts: ashu_apps
+  tasks:
+  - name: using debug
+    debug:
+      msg: "hello world i am using host variable "
+
+  - name: checking target current loging user 
+    command: whoami
+    register: out
+
+  - name: checking user 
+    debug:
+      var: out.stdout

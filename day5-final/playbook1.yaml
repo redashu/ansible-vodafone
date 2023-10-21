@@ -1,0 +1,17 @@
+---
+- hosts: all
+  tasks:
+  - name: running command 
+    command: date
+    register: out1
+
+  - name: testing a task
+    debug:
+      msg: 
+        - "hello {{ inventory_hostname }} welcome ansible automation "
+        - "current time is {{ out1.stdout  }}"
+
+  - name: webapp upgrade
+    debug:
+      msg: "web app upgrade is going on.."
+    serial: 3 

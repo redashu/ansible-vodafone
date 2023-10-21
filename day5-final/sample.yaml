@@ -1,0 +1,13 @@
+--- 
+- hosts: 192.168.100.2
+  vars_files:
+  - myvar.yaml 
+  tasks:
+  - name: run
+    command: "{{ cmd1 }}"
+    register: x 
+    changed_when: false
+
+  - name: output 
+    debug:
+      var: x["stdout"]

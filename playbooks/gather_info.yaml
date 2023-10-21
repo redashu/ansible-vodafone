@@ -1,0 +1,6 @@
+---
+- hosts: ashu_apps
+  tasks:
+    - name: taking hostname
+      debug: 
+       msg: "hostname is {{ ansible_fqdn }}"
